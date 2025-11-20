@@ -1,5 +1,5 @@
-import 'package:car_rent_app/presentation/auth/login_page.dart';
-import 'package:car_rent_app/utils.dart';
+import 'package:car_rent_app/data/model/user.dart';
+import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -20,8 +20,49 @@ class _RegisterPageState extends State<RegisterPage> {
   final _pwdCtr = TextEditingController();
 
   bool isObscure = true;
+  final _repo = UserRepository();
 
   @override
+  void dispose() {
+    _nameCtr.dispose();
+    _nikCtr.dispose();
+    _emailCtr.dispose();
+    _phoneCtr.dispose();
+    _addressCtr.dispose();
+    _usernameCtr.dispose();
+    _pwdCtr.dispose();
+    super.dispose();
+  }
+
+  Future<void> _register() async {
+    if (!_formKey.currentState!.validate()) return;
+    final name = _nameCtr.text.trim();
+    final nik = _nikCtr.text.trim();
+    final email = _emailCtr.text.trim();
+    final phone = _phoneCtr.text.trim();
+    final address = _addressCtr.text.trim();
+    final username = _usernameCtr.text.trim();
+    final password = _pwdCtr.text.trim();
+
+    final user = User(
+      name: name,
+      email: email,
+      nik: nik,
+      address: address,
+      phone: phone,
+      username: username,
+      password: password,
+    );
+
+    await _repo.registertUser(user);
+    if (mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Registrasi berhasil")));
+    }
+    Navigator.pop(context);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -237,11 +278,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            grPush(context, LoginPage());
-                          }
-                        },
+                        onPressed: _register,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           shape: RoundedRectangleBorder(
