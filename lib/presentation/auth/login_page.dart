@@ -1,5 +1,6 @@
+import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
-import 'package:car_rent_app/presentation/gr_navigator.dart';
+import 'package:car_rent_app/presentation/home_page.dart';
 import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,24 @@ class _LoginPageState extends State<LoginPage> {
   final _pwdCtr = TextEditingController();
 
   bool isObscure = true;
+  final _repo = UserRepository();
 
   @override
+  void _login() async {
+    final username = _usernameCtr.text.trim();
+    final password = _pwdCtr.text.trim();
+
+    final user = await _repo.login(username, password);
+
+    if (user != null) {
+      grPushReplace(context, HomePage());
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("username atau password salah")));
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -57,7 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    // label: Text("Username"),
                     hintText: "masukkan username",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -82,7 +98,6 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   obscureText: isObscure,
                   decoration: InputDecoration(
-                    // label: Text("Password"),
                     hintText: "masukkan password",
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -106,11 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        grPushReplace(context, GRNavigator());
-                      }
-                    },
+                    onPressed: _login,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       shape: RoundedRectangleBorder(
