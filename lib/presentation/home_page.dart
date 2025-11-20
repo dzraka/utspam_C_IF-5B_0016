@@ -1,4 +1,6 @@
 import 'package:car_rent_app/data/db/db_dummy.dart';
+import 'package:car_rent_app/presentation/rent_form_page.dart';
+import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 180,
                 decoration: BoxDecoration(
-                  color: Colors.amberAccent,
+                  color: Colors.black12,
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
@@ -66,39 +68,31 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   itemCount: DbDummy.cars.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.all(5.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 100,
-                                child: Image.asset(DbDummy.cars[index].img),
-                              ),
-
-                              SizedBox(
-                                width: 150,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(DbDummy.cars[index].name),
-                                    Text(DbDummy.cars[index].type),
-                                    Text(
-                                      "Rp ${DbDummy.cars[index].price.toString()}",
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(
-                                width: 50,
-                                child: Icon((Icons.navigate_next)),
-                              ),
-                            ],
+                    return InkWell(
+                      onTap: () => grPush(context, RentFormPage()),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.shade300),
                           ),
-                        ],
+                        ),
+                        child: ListTile(
+                          style: ListTileStyle.list,
+                          title: Text(DbDummy.cars[index].name),
+                          subtitle: Text(
+                            DbDummy.cars[index].type,
+                            style: TextStyle(color: Colors.grey.shade500),
+                          ),
+                          leading: SizedBox(
+                            height: 100,
+                            child: Image.asset(DbDummy.cars[index].img),
+                          ),
+
+                          trailing: Text(
+                            "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
+                            style: TextStyle(color: Colors.green, fontSize: 14),
+                          ),
+                        ),
                       ),
                     );
                   },
