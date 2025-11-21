@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:car_rent_app/core/app_theme.dart';
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
       password: password,
     );
 
-    await _repo.registertUser(user);
+    await _repo.registerUser(user);
     if (mounted) {
       log(
         "Registrasi Berhasil: ID=${user.id}, Name=${user.name}, NIK=${user.nik}, Email=${user.email}, Phone=${user.phone}, address=${user.address}, username=${user.username}, password=${user.password}",
@@ -81,7 +82,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 50,
                 child: Text(
                   "DAFTAR",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.darkText,
+                  ),
                 ),
               ),
 
@@ -105,14 +110,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         label: Text("Nama"),
                         hintText: "masukkan nama",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.person_outline),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // email
                     TextFormField(
@@ -129,14 +132,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         label: Text("Email"),
                         hintText: "masukkan email, ex: nama@gmail.com",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.email_outlined),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // alamat
                     TextFormField(
@@ -150,13 +151,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         labelText: "Alamat",
                         hintText: "masukkan alamat sesuai KTP",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.location_city_outlined),
                       ),
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // telp
                     TextFormField(
@@ -177,14 +176,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         label: Text("Nomor Telepon"),
                         hintText: "masukkan no. telp",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.phone_outlined),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // nik
                     TextFormField(
@@ -206,14 +203,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         label: Text("NIK"),
                         hintText: "masukkan NIK 16 digit",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.numbers_outlined),
+                        counterText: "",
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // username
                     TextFormField(
@@ -226,20 +222,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           return "username minimal 4 karakter";
                         }
                         if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-                          return "hanya boleh huruf, angka, dan underscore";
+                          return "hanya boleh huruf, angka, underscore, dan tanpa spasi";
                         }
                         return null;
                       },
                       decoration: InputDecoration(
                         label: Text("Username"),
                         hintText: "masukkan username",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        prefixIcon: Icon(Icons.person_outline),
                       ),
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
 
                     // password
                     TextFormField(
@@ -256,6 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         label: Text("Password"),
                         hintText: "masukkan password",
+                        prefixIcon: Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
                             isObscure ? Icons.visibility_off : Icons.visibility,
@@ -266,25 +261,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             });
                           },
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
 
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _register,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
                         child: Text("Daftar"),
                       ),
                     ),
@@ -299,7 +285,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: const Text("Masuk"),
+                          child: const Text(
+                            "Masuk",
+                            style: TextStyle(color: AppTheme.primaryBlue),
+                          ),
                         ),
                       ],
                     ),

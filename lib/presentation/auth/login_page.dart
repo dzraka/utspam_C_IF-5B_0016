@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:car_rent_app/core/app_theme.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/gr_navigator.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
@@ -20,6 +21,13 @@ class _LoginPageState extends State<LoginPage> {
 
   bool isObscure = true;
   final _repo = UserRepository();
+
+  @override
+  void dispose() {
+    _usernameCtr.dispose();
+    _pwdCtr.dispose();
+    super.dispose();
+  }
 
   @override
   void _login() async {
@@ -54,7 +62,11 @@ class _LoginPageState extends State<LoginPage> {
             height: 40,
             child: Text(
               "Masuk",
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.darkText,
+              ),
             ),
           ),
           SizedBox(height: 30),
@@ -64,8 +76,6 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // username
-                Text("Username", style: TextStyle()),
-                SizedBox(height: 10),
                 TextFormField(
                   controller: _usernameCtr,
                   validator: (value) {
@@ -76,23 +86,20 @@ class _LoginPageState extends State<LoginPage> {
                       return "username minimal 4 karakter";
                     }
                     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-                      return "hanya boleh huruf, angka, dan underscore";
+                      return "hanya boleh huruf, angka, underscore, dan tanpa spasi";
                     }
                     return null;
                   },
                   decoration: InputDecoration(
+                    label: Text("Username"),
                     hintText: "masukkan username",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    prefixIcon: Icon(Icons.person_outline),
                   ),
                 ),
 
                 SizedBox(height: 20),
 
                 // passwword
-                Text("Password", style: TextStyle()),
-                SizedBox(height: 10),
                 TextFormField(
                   controller: _pwdCtr,
                   validator: (value) {
@@ -105,7 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   obscureText: isObscure,
                   decoration: InputDecoration(
+                    label: Text("Password"),
                     hintText: "masukkan password",
+                    prefixIcon: Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
                         isObscure ? Icons.visibility_off : Icons.visibility,
@@ -115,9 +124,6 @@ class _LoginPageState extends State<LoginPage> {
                           isObscure = !isObscure;
                         });
                       },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -129,12 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: _login,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
                     child: Text("Masuk"),
                   ),
                 ),
@@ -150,7 +150,10 @@ class _LoginPageState extends State<LoginPage> {
               const Text("Belum memiliki akun? "),
               GestureDetector(
                 onTap: () => grPush(context, RegisterPage()),
-                child: const Text("Daftar"),
+                child: const Text(
+                  "Daftar",
+                  style: TextStyle(color: AppTheme.primaryBlue),
+                ),
               ),
             ],
           ),
