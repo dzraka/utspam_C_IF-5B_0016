@@ -1,3 +1,4 @@
+import 'package:car_rent_app/core/app_theme.dart';
 import 'package:car_rent_app/data/db/db_dummy.dart';
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                   : Text(
                       _user!.username,
                       style: TextStyle(
-                        color: Color(0xFF3C4048),
+                        color: AppTheme.primaryBlue,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -86,11 +87,14 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF3C4048),
+                      color: AppTheme.primaryBlue,
                     ),
                   ),
 
-                  IconButton(onPressed: () {}, icon: Icon(Icons.swap_vert)),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.swap_vert, color: AppTheme.primaryBlue),
+                  ),
                 ],
               ),
 
@@ -100,32 +104,39 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   itemCount: DbDummy.cars.length,
                   itemBuilder: (context, index) {
+                    final selectedCar = DbDummy.cars[index];
                     return InkWell(
-                      onTap: () => grPush(context, RentFormPage()),
+                      onTap: () {
+                        if (_user != null) {
+                          grPush(
+                            context,
+                            RentFormPage(car: selectedCar, user: _user!),
+                          );
+                        }
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300),
+                            bottom: BorderSide(color: AppTheme.greyOutline),
                           ),
                         ),
                         child: ListTile(
                           style: ListTileStyle.list,
-                          title: Text(DbDummy.cars[index].name),
+                          title: Text(DbDummy.cars[index].carName),
                           subtitle: Text(
-                            DbDummy.cars[index].type,
-                            style: TextStyle(color: Colors.grey.shade500),
+                            DbDummy.cars[index].carType,
+                            style: TextStyle(color: Colors.grey),
                           ),
                           leading: SizedBox(
                             height: 100,
-                            child: Image.asset(DbDummy.cars[index].img),
+                            child: Image.asset(DbDummy.cars[index].carImg),
                           ),
 
                           trailing: SizedBox(
                             width: 100,
                             child: Text.rich(
                               TextSpan(
-                                text:
-                                    "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
+                                text: "Rp ${DbDummy.cars[index].price}",
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 14,
