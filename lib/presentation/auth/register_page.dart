@@ -195,6 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     // nik
                     TextFormField(
                       controller: _nikCtr,
+                      maxLength: 16,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "NIK tidak boleh kosong";
