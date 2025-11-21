@@ -62,7 +62,7 @@ class SettingPage extends StatelessWidget {
             leading: Container(
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: itemColor.withOpacity(0.1),
+                color: itemColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, color: itemColor),
