@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/gr_navigator.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
-import 'package:car_rent_app/utils.dart';
+import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     final user = await _repo.login(username, password);
 
     if (user != null) {
-      log("Login Berhasil: ID=${user.id}, Nama=${user.username}");
+      log("Login Berhasil: ID=${user.id}, Username=${user.username}");
       grPushReplace(context, GRNavigator(userId: user.id!));
     } else {
       ScaffoldMessenger.of(
