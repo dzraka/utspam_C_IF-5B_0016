@@ -119,23 +119,26 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset(DbDummy.cars[index].img),
                           ),
 
-                          trailing: Text.rich(
-                            TextSpan(
-                              text:
-                                  "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 14,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: " / hari",
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 12,
-                                  ),
+                          trailing: SizedBox(
+                            width: 100,
+                            child: Text.rich(
+                              TextSpan(
+                                text:
+                                    "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14,
                                 ),
-                              ],
+                                children: [
+                                  TextSpan(
+                                    text: " / hari",
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
