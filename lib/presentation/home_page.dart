@@ -1,17 +1,39 @@
 import 'package:car_rent_app/data/db/db_dummy.dart';
+import 'package:car_rent_app/data/model/user.dart';
+import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/rent_form_page.dart';
 import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int userId;
+  const HomePage({super.key, required this.userId});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final _repo = UserRepository();
+  User? _user;
+
   @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    try {
+      final user = await _repo.getUserById(widget.userId);
+      setState(() {
+        _user = user;
+      });
+    } catch (e) {
+      debugPrint('Failed to load users: $e');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -21,17 +43,26 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Selamat Datang,",
+                "Selamat datang,",
                 style: TextStyle(color: Colors.grey.shade500, fontSize: 15),
               ),
-              const Text(
-                "rakamaulana",
-                style: TextStyle(
-                  color: Color(0xFF3C4048),
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              _user == null
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    )
+                  : Text(
+                      _user!.username,
+                      style: TextStyle(
+                        color: Color(0xFF3C4048),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
 
               const SizedBox(height: 20),
 
@@ -88,9 +119,24 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset(DbDummy.cars[index].img),
                           ),
 
-                          trailing: Text(
-                            "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
-                            style: TextStyle(color: Colors.green, fontSize: 14),
+                          trailing: Text.rich(
+                            TextSpan(
+                              text:
+                                  "Rp ${DbDummy.cars[index].price.toStringAsFixed(0)}",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 14,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: " / hari",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

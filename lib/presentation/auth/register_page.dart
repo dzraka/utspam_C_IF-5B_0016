@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     await _repo.registertUser(user);
     if (mounted) {
+      log(
+        "Registrasi Berhasil: ID=${user.id}, Name=${user.name}, NIK=${user.nik}, Email=${user.email}, Phone=${user.phone}, address=${user.address}, username=${user.username}, password=${user.password}",
+      );
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Registrasi berhasil")));

@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:car_rent_app/data/repository/user_repository.dart';
+import 'package:car_rent_app/gr_navigator.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
-import 'package:car_rent_app/presentation/home_page.dart';
 import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +23,17 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void _login() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
     final username = _usernameCtr.text.trim();
     final password = _pwdCtr.text.trim();
 
     final user = await _repo.login(username, password);
 
     if (user != null) {
-      grPushReplace(context, HomePage());
+      log("Login Berhasil: ID=${user.id}, Nama=${user.username}");
+      grPushReplace(context, GRNavigator(userId: user.id!));
     } else {
       ScaffoldMessenger.of(
         context,
