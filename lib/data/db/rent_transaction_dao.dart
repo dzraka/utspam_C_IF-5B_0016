@@ -13,7 +13,6 @@ class RentTransactionDao {
 
   Future<List<RentTransaction>> getTransactionsByUserId(int userId) async {
     final db = await dbHelper.database;
-
     final result = await db.query(
       'transactions',
       where: 'userId = ?',
