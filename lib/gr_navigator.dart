@@ -1,10 +1,11 @@
 import 'package:car_rent_app/presentation/home_page.dart';
-import 'package:car_rent_app/presentation/setting_page.dart';
-import 'package:car_rent_app/rental_history_page.dart';
+import 'package:car_rent_app/presentation/profle_page.dart';
+import 'package:car_rent_app/presentation/rental_history_page.dart';
 import 'package:flutter/material.dart';
 
 class GRNavigator extends StatefulWidget {
-  const GRNavigator({super.key});
+  final int userId;
+  const GRNavigator({super.key, required this.userId});
 
   @override
   State<GRNavigator> createState() => _GRNavigatorState();
@@ -12,10 +13,14 @@ class GRNavigator extends StatefulWidget {
 
 class _GRNavigatorState extends State<GRNavigator> {
   int _currentIndex = 1;
-  List<Widget> pages = [RentalHistoryPage(), HomePage(), SettingPage()];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      RentalHistoryPage(),
+      HomePage(userId: widget.userId),
+      ProfilePage(),
+    ];
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) => setState(() => _currentIndex = value),
@@ -33,8 +38,8 @@ class _GRNavigatorState extends State<GRNavigator> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
-            label: "Pengaturan",
-            activeIcon: Icon(Icons.settings),
+            label: "Profil",
+            activeIcon: Icon(Icons.person),
           ),
         ],
       ),
