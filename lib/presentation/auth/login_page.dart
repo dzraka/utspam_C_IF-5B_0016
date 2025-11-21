@@ -149,12 +149,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               const Text("Belum memiliki akun? "),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()),
-                  );
-                },
+                onTap: () => grPush(context, RegisterPage()),
                 child: const Text("Daftar"),
               ),
             ],

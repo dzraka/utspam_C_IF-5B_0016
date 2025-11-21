@@ -1,8 +1,8 @@
 import 'package:car_rent_app/data/db/db_dummy.dart';
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
-import 'package:car_rent_app/presentation/rent_form_page.dart';
-import 'package:car_rent_app/utils.dart';
+import 'package:car_rent_app/presentation/rent/rent_form_page.dart';
+import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

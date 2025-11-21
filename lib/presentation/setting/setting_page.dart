@@ -2,7 +2,7 @@ import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/presentation/auth/login_page.dart';
 import 'package:car_rent_app/presentation/setting/history_page.dart';
 import 'package:car_rent_app/presentation/setting/profile_page.dart';
-import 'package:car_rent_app/utils.dart';
+import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
