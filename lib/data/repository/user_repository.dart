@@ -4,7 +4,7 @@ import 'package:car_rent_app/data/model/user.dart';
 class UserRepository {
   final userDao = UserDao();
 
-  Future<int> registertUser(User user) async {
+  Future<int> registerUser(User user) async {
     return await userDao.insertUser(user);
   }
 
