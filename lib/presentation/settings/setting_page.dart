@@ -1,3 +1,4 @@
+import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/presentation/auth/login_page.dart';
 import 'package:car_rent_app/presentation/rent_history_page.dart';
 import 'package:car_rent_app/presentation/settings/profile_page.dart';
@@ -5,7 +6,8 @@ import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+  final User user;
+  const SettingPage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class SettingPage extends StatelessWidget {
             context,
             title: "Profil Saya",
             icon: Icons.person_outline,
-            onTap: () => grPush(context, ProfilePage()),
+            onTap: () => grPush(context, ProfilePage(user: user)),
           ),
           _buildSettingItem(
             context,
@@ -53,23 +55,17 @@ class SettingPage extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 15),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(16),
+        borderRadius: BorderRadiusGeometry.circular(15),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(15),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: Icon(icon),
-            ),
+            leading: Icon(icon),
             title: Text(
               title,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
