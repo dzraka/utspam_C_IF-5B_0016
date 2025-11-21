@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:car_rent_app/data/repository/user_repository.dart';
-import 'package:car_rent_app/gr_navigator.dart';
+import 'package:car_rent_app/presentation/gr_navigator.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
 import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';

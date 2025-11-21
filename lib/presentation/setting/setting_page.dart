@@ -1,7 +1,7 @@
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/presentation/auth/login_page.dart';
-import 'package:car_rent_app/presentation/rent_history_page.dart';
-import 'package:car_rent_app/presentation/settings/profile_page.dart';
+import 'package:car_rent_app/presentation/setting/history_page.dart';
+import 'package:car_rent_app/presentation/setting/profile_page.dart';
 import 'package:car_rent_app/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,7 @@ class SettingPage extends StatelessWidget {
             context,
             title: "Riwayat Penyewaan",
             icon: Icons.history,
-            onTap: () => grPush(context, RentHistoryPage()),
+            onTap: () => grPush(context, HistoryPage()),
           ),
           _buildSettingItem(
             context,

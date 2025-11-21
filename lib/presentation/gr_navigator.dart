@@ -1,7 +1,7 @@
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
-import 'package:car_rent_app/presentation/home_page.dart';
-import 'package:car_rent_app/presentation/settings/setting_page.dart';
+import 'package:car_rent_app/presentation/home/home_page.dart';
+import 'package:car_rent_app/presentation/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class GRNavigator extends StatefulWidget {
