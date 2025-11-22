@@ -91,7 +91,7 @@ class _RentFormPageState extends State<RentFormPage> {
           const SnackBar(content: Text("Penyewaan berhasil dibuat!")),
         );
 
-        grPushReplace(context, HistoryPage());
+        grPushReplace(context, RentHistoryPage(userId: widget.user.id!));
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
