@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text(
                 "Selamat datang,",
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 15),
+                style: TextStyle(color: Colors.grey.shade700, fontSize: 15),
               ),
               _user == null
                   ? const Padding(
@@ -81,22 +81,13 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 25),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Daftar Mobil",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryBlue,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.swap_vert, color: AppTheme.primaryBlue),
-                  ),
-                ],
+              Text(
+                "Daftar Mobil",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.primaryBlue,
+                ),
               ),
 
               SizedBox(height: 10),
