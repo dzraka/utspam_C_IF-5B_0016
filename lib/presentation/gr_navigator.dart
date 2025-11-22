@@ -34,12 +34,10 @@ class _GRNavigatorState extends State<GRNavigator> {
           }
           if (snapshot.hasData && snapshot.data != null) {
             final User activeUser = snapshot.data!;
-
             final List<Widget> pages = [
               HomePage(userId: widget.userId),
               SettingPage(user: activeUser),
             ];
-
             return pages[_currentIndex];
           }
           return const Center(child: Text("Gagal Memuat"));
@@ -54,6 +52,7 @@ class _GRNavigatorState extends State<GRNavigator> {
             label: "Beranda",
             activeIcon: Icon(Icons.home_filled),
           ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
             label: "Pengaturan",

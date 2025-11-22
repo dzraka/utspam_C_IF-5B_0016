@@ -4,7 +4,6 @@ import 'package:car_rent_app/core/app_theme.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/gr_navigator.dart';
 import 'package:car_rent_app/presentation/auth/register_page.dart';
-import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,9 +38,12 @@ class _LoginPageState extends State<LoginPage> {
 
     final user = await _repo.login(username, password);
 
-    if (user != null) {
+    if (mounted && user != null) {
       log("Login Berhasil: ID=${user.id}, Username=${user.username}");
-      grPushReplace(context, GRNavigator(userId: user.id!));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GRNavigator(userId: user.id!)),
+      );
     } else {
       ScaffoldMessenger.of(
         context,
@@ -57,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(24),
         children: [
           Center(child: Image.asset('assets/img/logo.png', width: 180)),
+
           SizedBox(height: 20),
+
           SizedBox(
             height: 40,
             child: Text(
@@ -69,7 +73,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
+
           SizedBox(height: 30),
+
           Form(
             key: _formKey,
             child: Column(
@@ -86,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       return "username minimal 4 karakter";
                     }
                     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-                      return "hanya boleh huruf, angka, underscore, dan tanpa spasi";
+                      return "hanya boleh huruf, angka, dan underscore";
                     }
                     return null;
                   },
@@ -95,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "masukkan username",
                     prefixIcon: Icon(Icons.person_outline),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
 
                 SizedBox(height: 20),
@@ -149,7 +156,12 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               const Text("Belum memiliki akun? "),
               GestureDetector(
-                onTap: () => grPush(context, RegisterPage()),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                  );
+                },
                 child: const Text(
                   "Daftar",
                   style: TextStyle(color: AppTheme.primaryBlue),

@@ -29,20 +29,28 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
+
             Text(
               user.username,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
+
             const SizedBox(height: 30),
+
             _buildInfoCard("Nama Lengkap", user.name, Icons.person_outline),
+
             _buildInfoCard("NIK", user.nik, Icons.numbers_outlined),
+
             _buildInfoCard(
               "Alamat",
               user.address,
               Icons.location_city_outlined,
             ),
+
             _buildInfoCard("Nomor Telepon", user.phone, Icons.phone_outlined),
+
             _buildInfoCard("Email", user.email, Icons.email_outlined),
           ],
         ),

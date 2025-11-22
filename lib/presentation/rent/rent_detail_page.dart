@@ -53,6 +53,7 @@ class _RentDetailPageState extends State<RentDetailPage> {
             onPressed: () => Navigator.pop(context, false),
             child: const Text("Tidak"),
           ),
+          
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             child: const Text("Ya, batalkan"),
@@ -148,13 +149,13 @@ class _RentDetailPageState extends State<RentDetailPage> {
 
             const SizedBox(height: 10),
 
-            _buildInfoRow("Nama Penyewa ", _user?.name ?? ""),
+            _buildInfo("Nama Penyewa ", _user?.name ?? ""),
 
-            _buildInfoRow("Tanggal Mulai ", tx.startDate),
+            _buildInfo("Tanggal Mulai ", tx.startDate),
 
-            _buildInfoRow("Lama Sewa ", "${tx.rentDays} Hari"),
+            _buildInfo("Lama Sewa ", "${tx.rentDays} Hari"),
 
-            _buildInfoRow("Harga ", "Rp ${_car.price} / Hari"),
+            _buildInfo("Harga ", "Rp ${_car.price} / Hari"),
 
             const SizedBox(height: 20),
 
@@ -217,7 +218,7 @@ class _RentDetailPageState extends State<RentDetailPage> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfo(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(

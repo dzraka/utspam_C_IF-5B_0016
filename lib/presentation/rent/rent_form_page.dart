@@ -1,5 +1,4 @@
 import 'package:car_rent_app/core/app_theme.dart';
-import 'package:car_rent_app/core/utils.dart';
 import 'package:car_rent_app/data/model/car.dart';
 import 'package:car_rent_app/data/model/rent_transaction.dart';
 import 'package:car_rent_app/data/model/user.dart';
@@ -90,8 +89,12 @@ class _RentFormPageState extends State<RentFormPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Penyewaan berhasil dibuat!")),
         );
-
-        grPushReplace(context, RentHistoryPage(userId: widget.user.id!));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RentHistoryPage(userId: widget.user.id!),
+          ),
+        );
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -120,7 +123,9 @@ class _RentFormPageState extends State<RentFormPage> {
                   fit: BoxFit.contain,
                 ),
               ),
+
               const SizedBox(height: 10),
+
               Text(
                 widget.car.carName,
                 style: const TextStyle(
@@ -129,22 +134,29 @@ class _RentFormPageState extends State<RentFormPage> {
                   color: AppTheme.darkText,
                 ),
               ),
+
               Text(
                 "Kategori: ${widget.car.carType}",
                 style: TextStyle(color: Colors.grey.shade600),
               ),
+
               const SizedBox(height: 20),
+
               const Divider(),
 
               const SizedBox(height: 10),
-              _buildInfoRow("Nama Penyewa", widget.user.name),
-              _buildInfoRow("Harga Sewa", "Rp ${widget.car.price} / hari"),
+
+              _buildInfo("Nama Penyewa", widget.user.name),
+
+              _buildInfo("Harga Sewa", "Rp ${widget.car.price} / hari"),
 
               const SizedBox(height: 20),
+
               const Text(
                 "Detail Sewa",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+
               const SizedBox(height: 15),
 
               TextFormField(
@@ -155,25 +167,32 @@ class _RentFormPageState extends State<RentFormPage> {
                   }
                   final n = int.tryParse(value);
                   if (n == null || n <= 0) {
-                    "harus angka positif";
+                    return "harus angka positif";
                   }
                   return null;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: "Lama Sewa (Hari)",
+                  label: Text("Lama Sewa (Hari)"),
                   prefixIcon: const Icon(
                     Icons.timer_outlined,
                     color: AppTheme.primaryBlue,
                   ),
-                  suffixText: "Hari",
+                  suffix: Text("Hari"),
                 ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
 
               const SizedBox(height: 20),
 
               TextFormField(
                 controller: _dateCtr,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "tanggal wajib dipilih";
+                  }
+                  return null;
+                },
                 readOnly: true,
                 onTap: _pickDate,
                 decoration: InputDecoration(
@@ -183,18 +202,13 @@ class _RentFormPageState extends State<RentFormPage> {
                     color: AppTheme.primaryBlue,
                   ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Tanggal wajib dipilih";
-                  }
-                  return null;
-                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
 
               const SizedBox(height: 30),
 
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: AppTheme.primaryBlue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -212,6 +226,7 @@ class _RentFormPageState extends State<RentFormPage> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    
                     Text(
                       "Rp $_totalPrice",
                       style: const TextStyle(
@@ -241,7 +256,7 @@ class _RentFormPageState extends State<RentFormPage> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfo(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(

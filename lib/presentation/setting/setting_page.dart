@@ -3,7 +3,6 @@ import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/presentation/auth/login_page.dart';
 import 'package:car_rent_app/presentation/rent/rent_history_page.dart';
 import 'package:car_rent_app/presentation/setting/profile_page.dart';
-import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
@@ -21,20 +20,64 @@ class SettingPage extends StatelessWidget {
             context,
             title: "Profil Saya",
             icon: Icons.person_outline,
-            onTap: () => grPush(context, ProfilePage(user: user)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(user: user),
+                ),
+              );
+            },
           ),
+
           _buildSettingItem(
             context,
             title: "Riwayat Penyewaan",
             icon: Icons.history,
-            onTap: () => grPush(context, RentHistoryPage(userId: user.id!)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RentHistoryPage(userId: user.id!),
+                ),
+              );
+            },
           ),
+
           _buildSettingItem(
             context,
             title: "Keluar",
             icon: Icons.logout_outlined,
-            onTap: () => grPushReplace(context, LoginPage()),
             isLogout: true,
+            onTap: () async {
+              final bool? confirm = await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Konfirmasi"),
+                  content: const Text("Apakah anda yakin ingin keluar?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: Text("Batal"),
+                    ),
+
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text("Ya, keluar"),
+                    ),
+                  ],
+                ),
+              );
+              if (confirm == true) {
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    (route) => false,
+                  );
+                }
+              }
+            },
           ),
         ],
       ),
@@ -48,9 +91,6 @@ class SettingPage extends StatelessWidget {
     required VoidCallback onTap,
     bool isLogout = false,
   }) {
-    final Color itemColor = isLogout ? Colors.redAccent : AppTheme.primaryBlue;
-    final Color textColor = isLogout ? Colors.redAccent : AppTheme.darkText;
-
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: InkWell(
@@ -62,17 +102,22 @@ class SettingPage extends StatelessWidget {
             leading: Container(
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: itemColor.withValues(alpha: 0.1),
+                color: isLogout
+                    ? Colors.redAccent.withValues(alpha: 0.1)
+                    : AppTheme.primaryBlue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: itemColor),
+              child: Icon(
+                icon,
+                color: isLogout ? Colors.redAccent : AppTheme.primaryBlue,
+              ),
             ),
             title: Text(
               title,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
-                color: textColor,
+                color: isLogout ? Colors.redAccent : AppTheme.darkText,
               ),
             ),
             trailing: const Icon(

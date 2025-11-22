@@ -91,6 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               SizedBox(height: 50),
+
               Form(
                 key: _formKey,
                 child: Column(
@@ -222,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return "username minimal 4 karakter";
                         }
                         if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-                          return "hanya boleh huruf, angka, underscore, dan tanpa spasi";
+                          return "hanya boleh huruf, angka, dan underscore";
                         }
                         return null;
                       },
@@ -231,6 +232,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: "masukkan username",
                         prefixIcon: Icon(Icons.person_outline),
                       ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
                     SizedBox(height: 16),

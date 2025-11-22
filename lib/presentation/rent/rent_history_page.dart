@@ -1,5 +1,4 @@
 import 'package:car_rent_app/core/app_theme.dart';
-import 'package:car_rent_app/core/utils.dart';
 import 'package:car_rent_app/data/db/db_dummy.dart';
 import 'package:car_rent_app/data/model/rent_transaction.dart';
 import 'package:car_rent_app/data/repository/rent_transaction_repository.dart';
@@ -57,7 +56,12 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                 final car = DbDummy.getCarById(tx.carId);
                 return InkWell(
                   onTap: () async {
-                    final result = await grPush(context, RentDetailPage());
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RentDetailPage(transaction: tx),
+                      ),
+                    );
                     if (result == true) {
                       _loadData();
                     }
@@ -95,7 +99,9 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                                         fontSize: 16,
                                       ),
                                     ),
+
                                     const SizedBox(height: 4),
+
                                     Text(
                                       "Penyewa: $_name",
                                       style: TextStyle(
@@ -103,6 +109,7 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                                         color: Colors.grey.shade700,
                                       ),
                                     ),
+
                                     Text(
                                       "${tx.rentDays} Hari\nMulai: ${tx.startDate}",
                                       style: TextStyle(
@@ -110,17 +117,12 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                                         color: Colors.grey.shade600,
                                       ),
                                     ),
+
                                     const SizedBox(height: 10),
+
                                     const Divider(height: 1),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "Total: Rp ${tx.totalPrice}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.primaryBlue,
-                                      ),
-                                    ),
+
+                                    const SizedBox(height: 10),
                                   ],
                                 ),
                               ),
@@ -132,6 +134,7 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                                   Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0,
+                                      vertical: 4.0,
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
@@ -153,6 +156,14 @@ class _RentHistoryPageState extends State<RentHistoryPage> {
                                 ],
                               ),
                             ],
+                          ),
+                          Text(
+                            "Total: Rp ${tx.totalPrice}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.primaryBlue,
+                            ),
                           ),
                         ],
                       ),

@@ -3,7 +3,6 @@ import 'package:car_rent_app/data/db/db_dummy.dart';
 import 'package:car_rent_app/data/model/user.dart';
 import 'package:car_rent_app/data/repository/user_repository.dart';
 import 'package:car_rent_app/presentation/rent/rent_form_page.dart';
-import 'package:car_rent_app/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -93,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                       color: AppTheme.primaryBlue,
                     ),
                   ),
-
                   IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.swap_vert, color: AppTheme.primaryBlue),
@@ -111,9 +109,12 @@ class _HomePageState extends State<HomePage> {
                     return InkWell(
                       onTap: () {
                         if (_user != null) {
-                          grPush(
+                          Navigator.push(
                             context,
-                            RentFormPage(car: selectedCar, user: _user!),
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  RentFormPage(car: selectedCar, user: _user!),
+                            ),
                           );
                         }
                       },
@@ -134,7 +135,6 @@ class _HomePageState extends State<HomePage> {
                             height: 100,
                             child: Image.asset(DbDummy.cars[index].carImg),
                           ),
-
                           trailing: SizedBox(
                             width: 100,
                             child: Text.rich(
