@@ -72,8 +72,11 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 180,
                 decoration: BoxDecoration(
-                  color: Colors.black12,
                   borderRadius: BorderRadius.circular(16),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/img/banner.jpg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
 
