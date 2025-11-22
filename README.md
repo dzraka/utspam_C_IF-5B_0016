@@ -2,7 +2,7 @@
 
 ### 1. Autentikasi (Login & Register)
 
-<img src="https://github.com/user-attachments/assets/6f77284a-3820-4c66-9b3a-a7c2b985719d" width="300" /> <img src="https://github.com/user-attachments/assets/0e270976-57b6-4536-89f9-7c4e5627a266" width="300" />
+<img src="https://github.com/user-attachments/assets/6f77284a-3820-4c66-9b3a-a7c2b985719d" width="100" /> <img src="https://github.com/user-attachments/assets/0e270976-57b6-4536-89f9-7c4e5627a266" width="100" />
 
 ### 2. Halaman Utama (Katalog Mobil)
 
