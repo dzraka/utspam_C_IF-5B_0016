@@ -27,7 +27,7 @@ class SettingPage extends StatelessWidget {
             context,
             title: "Riwayat Penyewaan",
             icon: Icons.history,
-            onTap: () => grPush(context, HistoryPage()),
+            onTap: () => grPush(context, RentHistoryPage(userId: user.id!)),
           ),
           _buildSettingItem(
             context,
